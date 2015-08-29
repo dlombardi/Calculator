@@ -19,6 +19,7 @@ var masterEquation = [];
 var entry = [];
 
 
+
 function numberClick(){
   $(this).attr("enabled","enabled");
   var number = $(this).text();
@@ -39,9 +40,6 @@ function operatorClick(){
   if(operatorArray.length === 2){
     refreshValue();
     $('.output').text(masterEquation[0]);
-    console.log(masterEquation);
-  } else {
-    $('.operator').attr("enabled","enabled");
   }
 }
 
@@ -55,23 +53,6 @@ function decimalClick(){
   }
 }
 
-
-function refreshValue(){
-  var op = operatorArray.shift();
-  var num1 = masterEquation[0];
-  var num2 = masterEquation[1];
-  var result;
-    switch(op){
-      case '+': result = parseFloat(num1) + parseFloat(num2); break;
-      case '-': result = parseFloat(num1) - parseFloat(num2); break;
-      case '*': result = parseFloat(num1) * parseFloat(num2); break;
-      case '÷': result = parseFloat(num1) / parseFloat(num2); break;
-      case '^': result = Math.pow(parseFloat(num1), parseFloat(num2));
-    }
-  masterEquation.splice(0, 2, result);
-}
-
-
 function clear(){
   operatorArray = [];
   masterEquation = [];
@@ -81,9 +62,10 @@ function clear(){
 
 function equalClick(){
   var numberEntry = entry.join("");
-  masterEquation.push(numberEntry);
+  masterEquation.splice(1, 1, numberEntry);
   refreshValue();
-  $('.output').text(masterEquation[0])
+  $('.output').text(masterEquation[0]);
+
   console.log(operatorArray);
   console.log(masterEquation);
   console.log(entry);
@@ -111,44 +93,17 @@ function percentage(){
   $('.output').text(percentageEntry);
 }
 
-
-
-
-
-//binary operators: you need one number on each side
-
-//uniary operator toggles positivity or negativity of number
-
-
-//
-// console.log(parenthesisSolve(mathExpression));
-// // '2+2'
-// function evaluateCompoundExpression(expression){
-//   var exponentRegex = /([\d.]+)(\^)([\d.]+)/;
-//   var multDivRegex = /([\d.]+)([*/])([\d.]+)/;
-//   var addSubtRegex = /([\d.]+)([-+])([\d.]+)/;
-//   var regexes = [exponentRegex, multDivRegex, addSubtRegex];
-//   regexes.forEach(function(regex){
-//     while (regex.test(expression)){
-//       var match = expression.match(regex);
-//       var result = evaluateBinaryOperation(match);
-//       expression = expression.replace(match[0], result);
-//     }
-//   });
-//   return parseFloat(expression);
-// }
-//
-// function evaluateBinaryOperation(binOpMatch){
-//   var num1 = parseFloat(binOpMatch[1]);
-//   var num2 = parseFloat(binOpMatch[3]);
-//   var op = binOpMatch[2];
-//   var result;
-//   switch(op){
-//     case '+': result = num1 + num2; break;
-//     case '-': result = num1 - num2; break;
-//     case '*': result = num1 * num2; break;
-//     case '/': result = num1 / num2; break;
-//     case '^': result = Math.pow(num1, num2);
-//   }
-//   return result;
-// }
+function refreshValue(){
+  var op = operatorArray.shift();
+  var num1 = masterEquation[0];
+  var num2 = masterEquation[1];
+  var result;
+    switch(op){
+      case '+': result = parseFloat(num1) + parseFloat(num2); break;
+      case '-': result = parseFloat(num1) - parseFloat(num2); break;
+      case '*': result = parseFloat(num1) * parseFloat(num2); break;
+      case '÷': result = parseFloat(num1) / parseFloat(num2); break;
+      case '^': result = Math.pow(parseFloat(num1), parseFloat(num2));
+    }
+  masterEquation.splice(0, 2, result);
+}
