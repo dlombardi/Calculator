@@ -19,13 +19,16 @@ var masterEquation = [];
 var entry = [];
 
 
-
 function numberClick(){
   $(this).attr("enabled","enabled");
   var number = $(this).text();
   entry.push(number);
   var numberEntry = entry.join("");
-  $('.output').text(numberEntry);
+  if(numberEntry.length > 12){
+    $('.output').text();
+  } else {
+    $('.output').text(numberEntry);
+  }
 }
 
 function operatorClick(){
@@ -64,33 +67,55 @@ function equalClick(){
   var numberEntry = entry.join("");
   masterEquation.splice(1, 1, numberEntry);
   refreshValue();
-  $('.output').text(masterEquation[0]);
-
-  console.log(operatorArray);
-  console.log(masterEquation);
-  console.log(entry);
+  $('.output').text(masterEquation[0].toString().substring(0, 14));
 }
 
 function negativePositiveSwitch(){
   var numberEntry = parseFloat(entry.join(""));
   var flippedEntry;
-  if (numberEntry > 0){
-    flippedEntry = numberEntry * -1;
+  var masterNumber = masterEquation[0];
+  var flippedMasterNumber;
+
+  if(masterEquation.length && operatorArray.length === 0){
+    if(masterNumber > 0){
+      flippedMasterNumber = masterNumber * -1;
+    } else {
+      flippedMasterNumber = Math.abs(masterNumber);
+    }
+    masterEquation.splice(0, masterEquation.length, flippedMasterNumber);
+    $('.output').text(flippedMasterNumber);
   } else {
-    flippedEntry = Math.abs(numberEntry);
+    if(numberEntry > 0 ){
+      flippedEntry = numberEntry * -1;
+    } else {
+      flippedEntry = Math.abs(numberEntry);
+    }
+    entry.splice(0, entry.length, flippedEntry);
+    $('.output').text(flippedEntry);
   }
-  entry.splice(0, entry.length, flippedEntry);
-  $('.output').text(flippedEntry);
+  console.log(operatorArray);
+  console.log(masterEquation);
+  console.log(entry);
 }
 
 function percentage(){
   var numberEntry = parseFloat(entry.join(""));
   var percentageEntry;
-  if (numberEntry > 0){
-    percentageEntry = numberEntry / 100;
+  var masterEquationPercentageEntry;
+  if(masterEquation.length && operatorArray.length === 0){
+    if (masterEquation[0] > 0){
+      masterEquationPercentageEntry = masterEquation[0] / 100;
+    }
+    masterEquation.splice(0, masterEquation.length, masterEquationPercentageEntry);
+    $('.output').text(masterEquationPercentageEntry);
+    console.log(masterEquation);
+  } else {
+    if (numberEntry > 0){
+      percentageEntry = numberEntry / 100;
+    }
+    entry.splice(0, entry.length, percentageEntry);
+    $('.output').text(percentageEntry);
   }
-  entry.splice(0, entry.length, percentageEntry);
-  $('.output').text(percentageEntry);
 }
 
 function refreshValue(){
