@@ -29,10 +29,10 @@ function numberClick(){
   } else {
     $('.output').text(numberEntry);
   }
+  console.log(entry);
 }
 
 function operatorClick(){
-  $(this).attr("enabled","enabled");
   var numberEntry = entry.join("");
   masterEquation.push(numberEntry);
 
@@ -42,8 +42,10 @@ function operatorClick(){
 
   if(operatorArray.length === 2){
     refreshValue();
-    $('.output').text(masterEquation[0]);
+    $('.output').text(round(masterEquation[0], 4));
+
   }
+  console.log(operatorArray);
 }
 
 function decimalClick(){
@@ -67,7 +69,7 @@ function equalClick(){
   var numberEntry = entry.join("");
   masterEquation.splice(1, 1, numberEntry);
   refreshValue();
-  $('.output').text(masterEquation[0].toString().substring(0, 14));
+  $('.output').text(round(masterEquation[0], 4));
 }
 
 function negativePositiveSwitch(){
@@ -93,9 +95,6 @@ function negativePositiveSwitch(){
     entry.splice(0, entry.length, flippedEntry);
     $('.output').text(flippedEntry);
   }
-  console.log(operatorArray);
-  console.log(masterEquation);
-  console.log(entry);
 }
 
 function percentage(){
@@ -104,14 +103,13 @@ function percentage(){
   var masterEquationPercentageEntry;
   if(masterEquation.length && operatorArray.length === 0){
     if (masterEquation[0] > 0){
-      masterEquationPercentageEntry = masterEquation[0] / 100;
+      masterEquationPercentageEntry = round((masterEquation[0] / 100), 10);
     }
-    masterEquation.splice(0, masterEquation.length, masterEquationPercentageEntry);
+    masterEquation.splice(0, masterEquation.length, round(masterEquationPercentageEntry, 12));
     $('.output').text(masterEquationPercentageEntry);
-    console.log(masterEquation);
   } else {
     if (numberEntry > 0){
-      percentageEntry = numberEntry / 100;
+      percentageEntry = round((numberEntry / 100), 10);
     }
     entry.splice(0, entry.length, percentageEntry);
     $('.output').text(percentageEntry);
@@ -132,3 +130,9 @@ function refreshValue(){
     }
   masterEquation.splice(0, 2, result);
 }
+
+function round(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
+
+// viosian ed1nburgh
