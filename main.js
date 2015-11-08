@@ -63,6 +63,8 @@ function clear(){
   masterEquation = [];
   entry = [];
   $('.output').empty();
+  $('.output').text("0");
+
 }
 
 function equalClick(){
