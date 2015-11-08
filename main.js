@@ -3,7 +3,6 @@
 $(document).ready(init);
 
 function init(){
-
   $('.num').click(numberClick);
   $('.operator').click(operatorClick);
   $('.equal').click(equalClick);
@@ -29,7 +28,6 @@ function numberClick(){
   } else {
     $('.output').text(numberEntry);
   }
-  console.log(entry);
 }
 
 function operatorClick(){
@@ -45,7 +43,6 @@ function operatorClick(){
     $('.output').text(round(masterEquation[0], 4));
 
   }
-  console.log(operatorArray);
 }
 
 function decimalClick(){
@@ -136,5 +133,3 @@ function refreshValue(){
 function round(value, decimals) {
     return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
-
-// viosian ed1nburgh
